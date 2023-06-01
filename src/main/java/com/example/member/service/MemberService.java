@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -28,6 +29,12 @@ public class MemberService {
         } else {
             return false;
         }
+    }
+
+    public void loginAxiso(MemberDTO memberDTO) {
+        // chaining method (체이닝 메서드)
+        memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(),memberDTO.getMemberPassword())
+                        .orElseThrow(() -> new NoSuchElementException("이메일 또는 비밀번호가 틀립니다."));
     }
 
     public List<MemberDTO> findAll() {

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <th:block th:replace="component/config :: config"></th:block>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
@@ -10,9 +11,28 @@
     <form action="/member/login" method="post">
         <input type="text" name="memberEmail" placeholder="이메일"> <br>
         <input type="text" name="memberPassword" placeholder="비밀번호"> <br>
-        <input type="submit" value="로그인">
+<!--        <input type="submit" value="로그인">-->
+        <input type="button" value="로그인" onclick="login()">
     </form>
 </div>
 <div th:replace="component/footer :: footer"></div>
 </body>
+<script>
+    const login = () => {
+        const email = document.querySelector('input[name="memberEmail"]').value;
+        const password = document.querySelector('input[name="memberPassword"]').value;
+        axios({
+            method: "post",
+            url: "/member/login/axios",
+            data: {
+                memberEmail: email,
+                memberPassword: password
+            }
+        }).then(res => {
+            console.log("res", res);
+        }).catch(err => {
+            console.log("err", err);
+        });
+    }
+</script>
 </html>
