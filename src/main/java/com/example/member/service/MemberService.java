@@ -46,13 +46,18 @@ public class MemberService {
         return memberDTOList;
     }
 
+//    public MemberDTO findById(Long id) {
+//        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
+//        if(optionalMemberEntity.isPresent()) {
+//            return MemberDTO.toDTO(optionalMemberEntity.get());
+//        } else {
+//            return null;
+//        }
+//    }
+
     public MemberDTO findById(Long id) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
-        if(optionalMemberEntity.isPresent()) {
-            return MemberDTO.toDTO(optionalMemberEntity.get());
-        } else {
-            return null;
-        }
+        MemberEntity memberEntity = memberRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        return MemberDTO.toDTO(memberEntity);
     }
 
     public void delete(Long id) {

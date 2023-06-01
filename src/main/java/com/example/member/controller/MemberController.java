@@ -66,6 +66,12 @@ public class MemberController {
         return "memberPages/memberDetail";
     }
 
+    @GetMapping("/axios/{id}")
+    public ResponseEntity detailAxios(@PathVariable Long id) throws Exception {
+        MemberDTO memberDTO = memberService.findById(id);
+        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
+    }
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         memberService.delete(id);

@@ -7,26 +7,38 @@
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <div id="section">
-<table>
+<table class="table table-striped">
     <tr>
         <th>id</th>
-        <th>email</th>
-        <th>password</th>
-        <th>name</th>
-        <th>birth</th>
-        <th>mobile</th>
-        <th>수정</th>
-    </tr>
-    <tr th:each="member:${member}">
         <td th:text="${member.id}"></td>
+    </tr>
+    <tr>
+        <th>email</th>
         <td th:text="${member.memberEmail}"></td>
+    </tr>
+    <tr>
+        <th>password</th>
         <td th:text="${member.memberPassword}"></td>
+    </tr>
+    <tr>
+        <th>name</th>
         <td th:text="${member.memberName}"></td>
+    </tr>
+    <tr>
+        <th>birth</th>
         <td th:text="${member.memberBirth}"></td>
+    </tr>
+    <tr>
+        <th>mobile</th>
         <td th:text="${member.memberMobile}"></td>
+    </tr>
+    <tr>
+        <th>수정</th>
         <td>
             <a th:href="@{|/member/update/${member.id}|}">수정</a>
         </td>
+    </tr>
+    <tr th:each="member:${member}">
     </tr>
 </table>
 </div>

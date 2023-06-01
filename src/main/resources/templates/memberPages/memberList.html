@@ -24,17 +24,67 @@
         <td th:text="${member.memberBirth}"></td>
         <td th:text="${member.memberMobile}"></td>
         <td>
-            <a th:href="@{|/member/${member.id}|}">조회</a>
+<!--            <a th:href="@{|/member/${member.id}|}">조회</a>-->
+            <button th:onclick="member_detail([[${member.id}]])">조회</button>
         </td>
         <td>
-            <a th:href="@{|/member/delete/${member.id}|}">삭제</a>
+<!--            <a th:href="@{|/member/delete/${member.id}|}">삭제</a>-->
+            <button th:onclick="member_delete([[${member.id}]])">삭제</button>
         </td>
 <!--        <td>-->
 <!--            <a th:href="@{|/member/update/${member.id}|}">수정</a>-->
 <!--        </td>-->
     </tr>
 </table>
+    <div id="detail-area">
+
+    </div>
 </div>
 <div th:replace="component/footer :: footer"></div>
 </body>
+<script>
+    const member_detail = (id) => {
+        // location.href = "/member/"+id;
+        const detailArea = document.querySelector("#detail-area");
+        axios({
+            method: "get",
+            url: "/member/axios/"+id
+        }).then(res => {
+            console.log("res", res);
+            // 회원 데이터
+            console.log("member", res.data);
+            // 회원 이메일
+            console.log("member", res.data.memberEmail);
+            let result = "<table class=\"table table-striped\">\n" +
+                "    <tr>\n" +
+                "        <th>id</th>\n" +
+                "        <td>"+ res.data.id+ "</td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <th>email</th>\n" +
+                "        <td>"+ res.data.memberEmail+ "</td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <th>password</th>\n" +
+                "        <td>"+ res.data.memberPassword+ "</td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <th>name</th>\n" +
+                "        <td>"+ res.data.memberName+ "</td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <th>birth</th>\n" +
+                "        <td>"+ res.data.memberBirth+ "</td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <th>mobile</th>\n" +
+                "        <td>"+ res.data.memberMobile+ "</td>\n" +
+                "    </tr>\n" +
+                "</table>"
+            detailArea.innerHTML = result;
+        }).catch(err => {
+            alert("해당 회원이 없습니다!")
+        });
+    }
+</script>
 </html>
