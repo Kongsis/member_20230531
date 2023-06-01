@@ -1,7 +1,6 @@
 package com.example.member.controller;
 
 import com.example.member.dto.MemberDTO;
-import com.example.member.entity.MemberEntity;
 import com.example.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,9 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Member;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
