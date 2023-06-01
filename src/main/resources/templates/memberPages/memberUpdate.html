@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="component/config :: config"></th:block>
+</head>
+<body>
+<div th:replace="component/header :: header"></div>
+<div th:replace="component/nav :: nav"></div>
+<div id="section">
+<form action="/member/update" method="post">
+    <input type="text" th:value="${member.id}" name="id" readonly> <br>
+    <input type="text" th:value="${member.memberEmail}" name="memberEmail" readonly> <br>
+    <input type="text" th:value="${member.memberPassword}" name="memberPassword"> <br>
+    <input type="text" th:value="${member.memberName}" name="memberName"> <br>
+    <input type="date" th:value="${member.memberBirth}" name="memberBirth"> <br>
+    <input type="text" th:value="${member.memberMobile}" name="memberMobile"> <br>
+    <input type="submit" value="수정">
+</form>
+</div>
+<div th:replace="component/footer :: footer"></div>
+</body>
+</html>

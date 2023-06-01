@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="component/config :: config"></th:block>
+</head>
+<body>
+<div th:replace="component/header :: header"></div>
+<div th:replace="component/nav :: nav"></div>
+<div id="section">
+    <a href="/member/save">회원가입</a>
+    <a href="/member/login">로그인</a>
+    <a href="/member/">회원목록</a>
+</div>
+<div th:replace="component/footer :: footer"></div>
+</body>
+</html>
