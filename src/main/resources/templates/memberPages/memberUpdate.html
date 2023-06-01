@@ -7,16 +7,44 @@
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <div id="section">
-<form action="/member/update" method="post">
+<!--<form action="/member/update" method="post">-->
     <input type="text" th:value="${member.id}" name="id" readonly> <br>
     <input type="text" th:value="${member.memberEmail}" name="memberEmail" readonly> <br>
     <input type="text" th:value="${member.memberPassword}" name="memberPassword"> <br>
     <input type="text" th:value="${member.memberName}" name="memberName"> <br>
     <input type="date" th:value="${member.memberBirth}" name="memberBirth"> <br>
     <input type="text" th:value="${member.memberMobile}" name="memberMobile"> <br>
-    <input type="submit" value="수정">
-</form>
+<!--    <input type="submit" value="수정">-->
+    <input type="button" value="수정" th:onclick="member_update()">
+<!--</form>-->
 </div>
 <div th:replace="component/footer :: footer"></div>
 </body>
+<script>
+    const member_update = () => {
+        const id = document.querySelector('input[name="id"]').value;
+        const email = document.querySelector('input[name="memberEmail"]').value;
+        const password = document.querySelector('input[name="memberPassword"]').value;
+        const name = document.querySelector('input[name="memberName"]').value;
+        const birth = document.querySelector('input[name="memberBirth"]').value;
+        const mobile = document.querySelector('input[name="memberMobile"]').value;
+        axios({
+            method: "put",
+            url: "/member/update/axios",
+            data: {
+                id: id,
+                memberEmail: email,
+                memberPassword: password,
+                memberName: name,
+                memberBirth: birth,
+                memberMobile: mobile
+            }
+        }).then(res => {
+            console.log("res", res);
+            location.href = "/member/";
+        }).catch(err => {
+            console.log("err", err);
+        });
+    }
+</script>
 </html>

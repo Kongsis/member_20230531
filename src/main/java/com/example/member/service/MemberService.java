@@ -31,7 +31,7 @@ public class MemberService {
         }
     }
 
-    public void loginAxiso(MemberDTO memberDTO) {
+    public void loginAxios(MemberDTO memberDTO) {
         // chaining method (체이닝 메서드)
         memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(),memberDTO.getMemberPassword())
                         .orElseThrow(() -> new NoSuchElementException("이메일 또는 비밀번호가 틀립니다."));
