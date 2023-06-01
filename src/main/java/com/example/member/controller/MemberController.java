@@ -1,6 +1,7 @@
 package com.example.member.controller;
 
 import com.example.member.dto.MemberDTO;
+import com.example.member.entity.MemberEntity;
 import com.example.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Member;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -46,8 +49,8 @@ public class MemberController {
     }
 
     @PostMapping("/login/axios")
-    public ResponseEntity memberLoginAxiso(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception {
-        memberService.loginAxiso(memberDTO);
+    public ResponseEntity memberLoginAxios(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception {
+        memberService.loginAxios(memberDTO);
         session.setAttribute("loginEmail", memberDTO.getMemberEmail());
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -73,9 +76,15 @@ public class MemberController {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public String memberDelete(@PathVariable Long id) {
         memberService.delete(id);
         return "redirect:/";
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
+        memberService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/update/{id}")
@@ -89,5 +98,12 @@ public class MemberController {
     public String update(@ModelAttribute MemberDTO memberDTO) {
         memberService.update(memberDTO);
         return "redirect:/";
+    }
+
+    @PutMapping("/update/axios")
+    public ResponseEntity updateAxios(@RequestBody MemberDTO memberDTO) throws Exception {
+        System.out.println("memberDTO = " + memberDTO);
+        memberService.update(memberDTO);
+        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
     }
 }
