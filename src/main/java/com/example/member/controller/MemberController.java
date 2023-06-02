@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Member;
 import java.util.List;
 
 @Controller
@@ -29,15 +30,17 @@ public class MemberController {
         return "memberPages/memberLogin";
     }
 
-//    @PostMapping("/emailCheck")
-//    public ResponseEntity emailCheck(@RequestBody MemberDTO memberDTO) {
-//        memberService.findByMemberEmail(memberDTO);
-//        if(memberDTO == null) {
-//            return new ResponseEntity<>(memberDTO, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.CONFLICT);
-//        }
-//    }
+    @PostMapping("/dup-check")
+    public ResponseEntity emailCheck(@RequestBody MemberDTO memberDTO) {
+//        memberService.findByMemberEmail(memberDTO.getMemberEmail());
+//        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
+        boolean result = memberService.emailCheck(memberDTO.getMemberEmail());
+        if(result) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
 
     @GetMapping("/login")
     public String loginForm(){

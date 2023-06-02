@@ -10,7 +10,14 @@
 <div id="section">
 <form action="/member/save" method="post">
     <input type="text" placeholder="계정" name="memberEmail" id="member-email" onblur="email_check()">
-    <h6 id="email-result"></h6> <br>
+    <h6 id="email-result">
+        <span id="good" style="color:green; display: none">
+            사용가능한 이메일 입니다.
+        </span>
+        <span id="no" style="color: red; display: none">
+            이미 사용중인 이메일 입니다.
+        </span>
+    </h6> <br>
     <input type="text" placeholder="비밀번호" name="memberPassword"> <br>
     <input type="text" placeholder="이름" name="memberName"> <br>
     <input type="date" placeholder="생년월일" name="memberBirth"> <br>
@@ -22,30 +29,29 @@
 </body>
 <script>
     const email_check = () => {
-        const email = document.getElementById("member-email").value;
+        document.querySelector("#good").style.display = "none";
+        document.querySelector("#no").style.display = "none";
+        const email = document.querySelector("#member-email").value;
         const result = document.getElementById("email-result");
-        let rtn = false;
+        if(email.length == 0) {
+            result.innerHTML = "필수입력입니다.";
+            result.style.color = "red";
+        }
         axios({
             method: "post",
-            url: "/member/emailCheck",
-            async: false,
+            url: "/member/dup-check",
             data: {
                 memberEmail: email
             }
         }).then(res => {
-            if(email.length == 0) {
-                result.innerHTML = "필수입력입니다.";
-                result.style.color = "red";
-            } else {
-                result.innerHTML = "사용가능한 이메일입니다.";
-                result.style.color = "green";
-                rtn = true;
-            }
+            // 중복되지 않은 경우
+            console.log("then")
+            document.querySelector("#good").style.display = "block";
         }).catch(err => {
-            result.innerHTML = "사용중인 이메일입니다.";
-            result.style.color = "red";
+            // 중복된 경우
+            console.log("catch")
+            document.querySelector("#no").style.display = "block";
         });
-        return rtn;
     }
 </script>
 </html>
