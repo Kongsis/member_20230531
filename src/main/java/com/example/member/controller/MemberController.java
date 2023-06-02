@@ -143,4 +143,10 @@ public class MemberController {
         memberService.update(memberDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
 }
