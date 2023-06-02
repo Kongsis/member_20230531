@@ -9,7 +9,8 @@
 <div th:replace="component/nav :: nav"></div>
 <div id="section">
 <form action="/member/save" method="post">
-    <input type="text" placeholder="계정" name="memberEmail"> <br>
+    <input type="text" placeholder="계정" name="memberEmail" id="member-email" onblur="email_check()">
+    <h6 id="email-result"></h6> <br>
     <input type="text" placeholder="비밀번호" name="memberPassword"> <br>
     <input type="text" placeholder="이름" name="memberName"> <br>
     <input type="date" placeholder="생년월일" name="memberBirth"> <br>
@@ -19,4 +20,32 @@
 </div>
 <div th:replace="component/footer :: footer"></div>
 </body>
+<script>
+    const email_check = () => {
+        const email = document.getElementById("member-email").value;
+        const result = document.getElementById("email-result");
+        let rtn = false;
+        axios({
+            method: "post",
+            url: "/member/emailCheck",
+            async: false,
+            data: {
+                memberEmail: email
+            }
+        }).then(res => {
+            if(email.length == 0) {
+                result.innerHTML = "필수입력입니다.";
+                result.style.color = "red";
+            } else {
+                result.innerHTML = "사용가능한 이메일입니다.";
+                result.style.color = "green";
+                rtn = true;
+            }
+        }).catch(err => {
+            result.innerHTML = "사용중인 이메일입니다.";
+            result.style.color = "red";
+        });
+        return rtn;
+    }
+</script>
 </html>

@@ -7,44 +7,70 @@
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <div id="section">
-<!--<form action="/member/update" method="post">-->
-    <input type="text" th:value="${member.id}" name="id" readonly> <br>
+<form action="/member/update" method="post">
+    <input type="hidden" name="id" th:value="${member.id}"> <br>
+<!--    <input type="text" th:value="${member.id}" name="id" readonly> <br>-->
     <input type="text" th:value="${member.memberEmail}" name="memberEmail" readonly> <br>
     <input type="text" th:value="${member.memberPassword}" name="memberPassword"> <br>
     <input type="text" th:value="${member.memberName}" name="memberName"> <br>
     <input type="date" th:value="${member.memberBirth}" name="memberBirth"> <br>
     <input type="text" th:value="${member.memberMobile}" name="memberMobile"> <br>
 <!--    <input type="submit" value="수정">-->
-    <input type="button" value="수정" th:onclick="member_update()">
-<!--</form>-->
+    <input type="button" value="수정" onclick="member_update()">
+</form>
 </div>
 <div th:replace="component/footer :: footer"></div>
 </body>
-<script>
+<script th:inline="javascript">
     const member_update = () => {
+        const passDB = [[${member.memberPassword}]];
+        const password = document.querySelector('input[name="memberPassword"]').value;
         const id = document.querySelector('input[name="id"]').value;
         const email = document.querySelector('input[name="memberEmail"]').value;
-        const password = document.querySelector('input[name="memberPassword"]').value;
+        // const password = document.querySelector('input[name="memberPassword"]').value;
         const name = document.querySelector('input[name="memberName"]').value;
         const birth = document.querySelector('input[name="memberBirth"]').value;
         const mobile = document.querySelector('input[name="memberMobile"]').value;
-        axios({
-            method: "put",
-            url: "/member/update/axios",
-            data: {
-                id: id,
-                memberEmail: email,
-                memberPassword: password,
-                memberName: name,
-                memberBirth: birth,
-                memberMobile: mobile
-            }
-        }).then(res => {
-            console.log("res", res);
-            location.href = "/member/";
-        }).catch(err => {
-            console.log("err", err);
-        });
+        if (passDB == password) {
+            axios({
+                method: "put",
+                url: "/member/" + id,
+                data: {
+                    id: id,
+                    memberEmail: email,
+                    memberPassword: password,
+                    memberName: name,
+                    memberBirth: birth,
+                    memberMobile: mobile
+                }
+            }).then(res => {
+                console.log("res", res);
+                location.href = "/member/" + id;
+            }).catch(err => {
+                console.log("err", err);
+                alert("회원정보 수정 실패!");
+            });
+        } else {
+            alert("비밀번호가 일치하지 않습니다!")
+        }
     }
+    //     axios({
+    //         method: "put",
+    //         url: "/member/update/axios",
+    //         data: {
+    //             id: id,
+    //             memberEmail: email,
+    //             memberPassword: password,
+    //             memberName: name,
+    //             memberBirth: birth,
+    //             memberMobile: mobile
+    //         }
+    //     }).then(res => {
+    //         console.log("res", res);
+    //         location.href = "/member/";
+    //     }).catch(err => {
+    //         console.log("err", err);
+    //     });
+    // }
 </script>
 </html>

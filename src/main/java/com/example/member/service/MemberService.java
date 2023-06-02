@@ -21,6 +21,14 @@ public class MemberService {
         return memberRepository.save(memberEntity).getId();
     }
 
+    public MemberDTO findByMemberEmail(String loginEmail) {
+        // 조회를 하면서 없으면 예외처리, 있으면 MemberEntity 리턴
+        MemberEntity memberEntity = memberRepository.findByMemberEmail(loginEmail)
+                .orElseThrow(() -> new NoSuchElementException());
+        // 있는 경우 DTO로 변환하여 컨트롤러로 리턴
+        return MemberDTO.toDTO(memberEntity);
+    }
+
     public boolean login(MemberDTO memberDTO) {
         Optional<MemberEntity> memberEntity =
                 memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(),memberDTO.getMemberPassword());

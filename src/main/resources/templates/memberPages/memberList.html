@@ -29,8 +29,9 @@
             <button th:onclick="member_detail([[${member.id}]])">조회</button>
         </td>
         <td>
-            <a th:href="@{|/member/update/${member.id}|}">수정</a>
+<!--            <a th:href="@{|/member/update/${member.id}|}">수정</a>-->
 <!--            <button th:onclick="member_update([[${member.id}]])">수정</button>-->
+            <button onclick="update()">회원정보수정</button>
         </td>
         <td>
 <!--            <a th:href="@{|/member/delete/${member.id}|}">삭제</a>-->
@@ -45,17 +46,9 @@
 <div th:replace="component/footer :: footer"></div>
 </body>
 <script>
-    // const member_update = (id) => {
-    //     axios({
-    //         method: "put",
-    //         url: "/member/update/axios" + id,
-    //     }).then(res => {
-    //         console.log("res", res);
-    //         location.href = "/member/update";
-    //     }).catch(err => {
-    //         console.log("err", err);
-    //     });
-    // }
+    const update = () => {
+        location.href = "/member/update";
+    }
 
     const member_delete = (id) => {
         // location.href = "/member/delete/" + id;
