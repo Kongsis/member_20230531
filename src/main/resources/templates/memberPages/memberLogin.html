@@ -14,8 +14,8 @@
         <p id="login-result" style="color: red; display: none">
             이메일 또는 비밀번호가 틀립니다!
         </p> <br>
-        <input type="submit" value="로그인">
-<!--        <input type="submit" value="로그인" onclick="login()">-->
+<!--        <input type="submit" value="로그인">-->
+        <input type="button" value="로그인" onclick="login()">
     </form>
 </div>
 <div th:replace="component/footer :: footer"></div>
@@ -24,6 +24,8 @@
     const login = () => {
         const email = document.querySelector('input[name="memberEmail"]').value;
         const password = document.querySelector('input[name="memberPassword"]').value;
+        const redirectURI = document.querySelector('input[name="redirectURI"]').value;
+        console.log("redirectURI", redirectURI);
         axios({
             method: "post",
             url: "/member/login/axios",
@@ -33,7 +35,8 @@
             }
         }).then(res => {
             console.log("res", res);
-            location.href = "/member/mypage"
+            // location.href = "/member/mypage"
+            location.href = redirectURI;
         }).catch(err => {
             console.log("err", err);
             // document.querySelector("#login-result").style.display = "block";
